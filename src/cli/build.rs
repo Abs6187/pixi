@@ -34,6 +34,10 @@ pub struct Args {
     /// The output directory to place the build artifacts
     #[clap(long, short, default_value = ".")]
     pub output_dir: PathBuf,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 struct ProgressReporter {

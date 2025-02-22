@@ -241,6 +241,10 @@ pub struct DependencyConfig {
     /// The subdirectory of the git repository to use
     #[clap(long, short, requires = "git")]
     pub subdir: Option<String>,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 impl DependencyConfig {
