@@ -40,6 +40,10 @@ pub struct Args {
     /// Only remove the activation cache
     #[arg(long)]
     pub activation_cache: bool,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 /// Clean the cache of your system which are touched by pixi.
@@ -189,7 +193,7 @@ async fn remove_folder_with_progress(
     warning_non_existent: bool,
 ) -> miette::Result<()> {
     if !folder.exists() {
-        if warning_non_existent {
+        if (warning_non_existent) {
             eprintln!(
                 "{}",
                 console::style(format!("Folder {:?} was already clean.", &folder)).yellow()
@@ -222,7 +226,7 @@ async fn remove_folder_with_progress(
 
 async fn remove_file(file: PathBuf, warning_non_existent: bool) -> miette::Result<()> {
     if !file.exists() {
-        if warning_non_existent {
+        if (warning_non_existent) {
             eprintln!(
                 "{}",
                 console::style(format!("File {:?} was not found.", &file)).yellow()

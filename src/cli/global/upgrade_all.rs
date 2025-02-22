@@ -17,6 +17,10 @@ pub struct Args {
     /// The platform to install the package for.
     #[clap(long, default_value_t = Platform::current())]
     platform: Platform,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 pub async fn execute(_args: Args) -> miette::Result<()> {

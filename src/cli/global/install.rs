@@ -61,6 +61,10 @@ pub struct Args {
     /// Specifies that the packages should be reinstalled even if they are already installed.
     #[arg(action, long)]
     force_reinstall: bool,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 impl HasSpecs for Args {

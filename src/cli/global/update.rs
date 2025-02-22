@@ -15,6 +15,10 @@ pub struct Args {
 
     #[clap(flatten)]
     config: ConfigCli,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 pub async fn execute(args: Args) -> miette::Result<()> {
@@ -26,6 +30,7 @@ pub async fn execute(args: Args) -> miette::Result<()> {
     async fn apply_changes(
         env_name: &EnvironmentName,
         project: &mut Project,
+        render_layers: Option<String>,
     ) -> miette::Result<StateChanges> {
         // See what executables were installed prior to update
         let env_binaries = project.executables(env_name).await?;
@@ -76,7 +81,7 @@ pub async fn execute(args: Args) -> miette::Result<()> {
     for env_name in env_names {
         let mut project = last_updated_project.clone();
 
-        match apply_changes(&env_name, &mut project).await {
+        match apply_changes(&env_name, &mut project, args.render_layers.clone()).await {
             Ok(state_changes) => state_changes.report(),
             Err(err) => {
                 revert_environment_after_error(&env_name, &last_updated_project).await?;

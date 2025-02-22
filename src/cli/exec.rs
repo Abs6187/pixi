@@ -44,6 +44,10 @@ pub struct Args {
 
     #[clap(flatten)]
     pub config: ConfigCli,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 /// CLI entry point for `pixi exec`

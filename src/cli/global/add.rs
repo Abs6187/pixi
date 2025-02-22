@@ -31,6 +31,10 @@ pub struct Args {
 
     #[clap(flatten)]
     config: ConfigCli,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 impl HasSpecs for Args {
@@ -54,6 +58,7 @@ pub async fn execute(args: Args) -> miette::Result<()> {
         specs: &[MatchSpec],
         expose: &[Mapping],
         project: &mut Project,
+        render_layers: Option<String>,
     ) -> miette::Result<StateChanges> {
         let mut state_changes = StateChanges::new_with_env(env_name.clone());
 
@@ -72,7 +77,7 @@ pub async fn execute(args: Args) -> miette::Result<()> {
         }
 
         // Sync environment
-        state_changes |= project.sync_environment(env_name, None).await?;
+        state_changes |= project.sync_environment(env_name, render_layers).await?;
 
         // Figure out added packages and their corresponding versions
         state_changes |= project.added_packages(specs, env_name).await?;
@@ -94,6 +99,7 @@ pub async fn execute(args: Args) -> miette::Result<()> {
         specs.as_slice(),
         args.expose.as_slice(),
         &mut project_modified,
+        args.render_layers.clone(),
     )
     .await
     {
