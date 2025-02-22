@@ -56,6 +56,10 @@ pub struct Args {
     /// Invert tree and show what depends on given package in the regex argument
     #[arg(short, long, requires = "regex")]
     pub invert: bool,
+
+    /// The render layers to use
+    #[arg(long)]
+    pub render_layers: Option<String>,
 }
 
 struct Symbols {

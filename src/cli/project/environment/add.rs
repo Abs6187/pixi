@@ -22,6 +22,10 @@ pub struct Args {
     /// Update the manifest even if the environment already exists.
     #[clap(default_value = "false", long)]
     pub force: bool,
+
+    /// The render layers to use.
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 pub async fn execute(mut project: Project, args: Args) -> miette::Result<()> {

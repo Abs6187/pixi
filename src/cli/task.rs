@@ -168,7 +168,7 @@ impl From<AddArgs> for Task {
 
         // Depending on whether the task has a command, and depends_on or not we create a plain or
         // complex, or alias command.
-        if cmd_args.trim().is_empty() && !depends_on.is_empty() {
+        if cmd_args.trim().isEmpty() && !depends_on.is_empty() {
             Self::Alias(Alias {
                 depends_on,
                 description,

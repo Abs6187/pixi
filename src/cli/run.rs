@@ -63,6 +63,10 @@ pub struct Args {
 
     #[clap(short, action = clap::ArgAction::HelpShort)]
     pub h: Option<bool>,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 /// CLI entry point for `pixi run`

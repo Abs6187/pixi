@@ -18,6 +18,10 @@ pub struct Args {
     /// The name of the feature to modify.
     #[clap(long, short)]
     pub feature: Option<String>,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 pub async fn execute(mut project: Project, args: Args) -> miette::Result<()> {

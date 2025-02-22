@@ -30,6 +30,10 @@ pub struct Args {
 
     /// The file to upload
     package_file: PathBuf,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 /// Upload a package to a prefix.dev channel
@@ -77,13 +81,19 @@ pub async fn execute(args: Args) -> miette::Result<()> {
 
     let body = reqwest::Body::wrap_stream(reader_stream);
 
-    let response = client
+    let mut request = client
         .post(args.host.clone())
         .header("X-File-Sha256", sha256sum)
         .header("X-File-Name", filename)
         .header("Content-Length", filesize)
         .header("Content-Type", "application/octet-stream")
-        .body(body)
+        .body(body);
+
+    if let Some(render_layers) = args.render_layers {
+        request = request.header("X-Render-Layers", render_layers);
+    }
+
+    let response = request
         .send()
         .await
         .map_err(|e| UploadError::RequestFailed {

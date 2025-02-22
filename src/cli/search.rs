@@ -46,6 +46,10 @@ pub struct Args {
     /// Limit the number of search results
     #[clap(short, long)]
     pub limit: Option<usize>,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 /// fetch packages from `repo_data` using `repodata_query_func` based on
@@ -79,7 +83,7 @@ where
     let repos: Vec<RepoData> = repodata_query_func(specs).await.into_diagnostic()?;
 
     let mut packages: Vec<RepoDataRecord> = Vec::new();
-    if only_latest {
+    if (only_latest) {
         for repo in repos {
             // sort records by version, get the latest one of each package
             let records_of_repo: HashMap<String, RepoDataRecord> = repo

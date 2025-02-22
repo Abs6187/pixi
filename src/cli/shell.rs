@@ -38,6 +38,10 @@ pub struct Args {
 
     #[clap(flatten)]
     activation_config: ConfigCliActivation,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 /// Set up Ctrl-C handler to ignore it (the child process should react on CTRL-C)

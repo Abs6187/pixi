@@ -20,6 +20,10 @@ pub struct Args {
     /// The desired version (to downgrade or upgrade to). Update to the latest version if not specified.
     #[clap(long)]
     version: Option<Version>,
+
+    /// The render layers to use
+    #[clap(long)]
+    render_layers: Option<String>,
 }
 
 fn user_agent() -> String {

@@ -39,6 +39,10 @@ pub struct Args {
     /// Only show the changes that would be made, without actually updating the manifest, lock file, or environment.
     #[clap(short = 'n', long)]
     pub dry_run: bool,
+
+    /// Enable render layers
+    #[clap(long)]
+    pub render_layers: bool,
 }
 
 #[derive(Parser, Debug, Default)]
@@ -81,7 +85,7 @@ pub async fn execute(args: Args) -> miette::Result<()> {
             &args.prefix_update_config,
             &args.specs.feature,
             &[],
-            false,
+            args.render_layers,
             args.dry_run,
         )
         .await

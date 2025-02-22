@@ -24,6 +24,10 @@ pub struct Args {
     /// The name of the feature to add the platform to.
     #[clap(long, short)]
     pub feature: Option<String>,
+
+    /// The render layers to use.
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 pub async fn execute(mut project: Project, args: Args) -> miette::Result<()> {
@@ -66,6 +70,14 @@ pub async fn execute(mut project: Project, args: Args) -> miette::Result<()> {
                 FeatureName::Default => platform.to_string(),
                 FeatureName::Named(name) => format!("{} to the feature {}", platform, name),
             }
+        );
+    }
+
+    if let Some(render_layers) = args.render_layers {
+        eprintln!(
+            "{}Render layers: {}",
+            console::style(console::Emoji("✔ ", "")).green(),
+            render_layers
         );
     }
 

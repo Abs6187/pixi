@@ -43,6 +43,10 @@ pub struct Args {
     /// Output the changes in JSON format.
     #[clap(long)]
     pub json: bool,
+
+    /// The render layers to use
+    #[clap(long)]
+    pub render_layers: Option<String>,
 }
 
 #[derive(Parser, Debug, Default)]

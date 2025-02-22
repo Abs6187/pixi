@@ -74,6 +74,11 @@ pub async fn execute(args: Args) -> miette::Result<()> {
         }
     };
 
+    if let Some(render_layers) = &dependency_config.render_layers {
+        // Handle the render_layers argument
+        // Add your logic here to handle the render_layers argument
+    }
+
     project.save()?;
 
     // TODO: update all environments touched by this feature defined.

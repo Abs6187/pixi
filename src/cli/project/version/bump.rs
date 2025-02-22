@@ -2,7 +2,7 @@ use crate::Project;
 use miette::{Context, IntoDiagnostic};
 use rattler_conda_types::VersionBumpType;
 
-pub async fn execute(mut project: Project, bump_type: VersionBumpType) -> miette::Result<()> {
+pub async fn execute(mut project: Project, bump_type: VersionBumpType, render_layers: Option<String>) -> miette::Result<()> {
     // get version and exit with error if not found
     let current_version = project
         .version()
@@ -29,6 +29,13 @@ pub async fn execute(mut project: Project, bump_type: VersionBumpType) -> miette
         current_version,
         new_version,
     );
+
+    if let Some(layers) = render_layers {
+        eprintln!(
+            "Render layers applied: {}",
+            console::style(layers).bold()
+        );
+    }
 
     Ok(())
 }
